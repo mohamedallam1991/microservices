@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"time"
 
 	_ "github.com/jackc/pgconn"
@@ -14,7 +13,7 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
-const webPort = "80"
+const webPort = "8083"
 
 var counts int64
 
@@ -62,9 +61,11 @@ func openDB(dsn string) (*sql.DB, error) {
 }
 
 func connectToDB() *sql.DB {
-	dsn := os.Getenv("DSN")
+	// dsn := os.Getenv("DSN")
+	dsn := "host=postgres port=5432 user=postgres password=password dbname=users sslmode=disable timezone=UTC connect_timeout=5"
+
 	for {
-		connection, error := openDB(dsn)
+		connection, err := openDB(dsn)
 		if err != nil {
 			log.Println("postgres not ready")
 			counts++
