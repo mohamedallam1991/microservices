@@ -133,7 +133,6 @@ func (app *Config) GetAuth(w http.ResponseWriter) {
 		app.errorJSON(w, err)
 		return
 	}
-
 	defer response.Body.Close()
 
 	if response.StatusCode == http.StatusUnauthorized {
